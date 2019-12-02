@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+  <title></title>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#temp {
+  border: 1px solid #dddddd;
+  background: #009898;
+  text-align: left;
+  padding: 8px;
+  height:50px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+}
+
+img {
+  max-width: 100%;
+  max-height: 126%;
+  width:100px;
+
+}
+
+.player_img{
+  border-radius: 56%;
+}
+.logo {
+  height: 150px;
+  width: 150px;
+  margin:10px 10px;
+}
+.logo img{
+  width:120px;
+}
+.logout {
+  flex-wrap: wrap;
+  border-radius: 100%;
+  margin: 10px 10px;
+  width:80px;
+  display: flex;
+  align-content: center;
+}
+
+.logout img{
+   margin-top: 40px;
+  height:80px;
+}
+.logout div{
+  height:40px;
+  margin:15px 12px;
+  font-size: 25px;
+}
+.banner {
+  display:flex;
+  width: auto;
+  background-color:#{{perteam.team_ihfew}};
+
+  /*background: white url({% static 'images/india.png' %}) no-repeat;
+  background-repeat: no-repeat;
+  background-size: 150px 100px;*/
+}
+
+.banner > div {
+  display: inline-flex;
+  height: 150px;
+}
+
+.midhead {
+  width: 100%;
+  display: inline-block;
+  flex-wrap: wrap;
+}
+
+div.midhead p {
+  width: inherit;
+  margin: 20 auto;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 4em;
+  color: white;
+}
+
+.allPlayers {
+  display: flex;
+  height: 60px;
+}
+.colorful{
+  background-color: yellow;
+}
+.allPlayers > div{
+  display: inline-block;
+  height: inherit;
+  width:100%;
+  background-size: contain;
+}
+
+.midhead > div {
+  width: 100%;
+  margin:-10px;
+}
+
+.player{
+  display: inline-block;
+  height: inherit;
+  width:100%;
+  background-size: contain;
+}
+.basicStat {
+  display: flex;
+}
+
+
+#myInput {
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 1300px;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+}
+</style>
+</head>
+<body>
+{% load static %}
+<div class="banner">
+  <div class="logo">
+    <img src='{% static imagee %}' align="left"/>
+  </div>
+ 
+  <div class="midhead">
+    <div class="basicStat">
+      <p>{{perteam.team_ruppe}}/100</p>
+      <p>{{perteam.team_cur_players}}/18</p>
+    </div>
+    
+    <div class="allPlayers">
+    {% for player in own_players %}
+      <div><img src='/{{ player.player_logo.url }}' class="player_img"></div>
+    {% endfor %}
+    {% for i in n%}
+      <div><img src= '{% static "/images/question.png" %}' class="player_img"></div> 
+    {% endfor %}
+    </div>
+  </div>
+
+  {% if p1 %}
+     <div class="logout">
+          <img src= '/{{ p1.player_logo.url}}'>
+        <div id ="cur_bid"></div>
+    
+  </div>
+{% endif %}
+</div>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for player..." title="Type in a name">
+
+<table id="myTable">
+
+  {% for player in players %}
+    {% if player.player_team == request.user.username %}
+       <tr style="background-color: #{{perteam.team_ihfew}}">
+          <td>{{player.player_name}}</td>
+          <td>{{player.player_soldprice}}</td>
+          <td>{{player.player_basePrice}}</td>
+          <td>{{player.player_team}}</td>
+        </tr>
+    {% else %}
+        <tr>
+          <td>{{player.player_name}}</td>
+          <td>{{player.player_soldprice}}</td>
+          <td>{{player.player_basePrice}}</td>
+          <td>{{player.player_team}}</td>
+        </tr>
+    {% endif %}
+{% endfor %}
+</table>
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText ;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+setTimeout(function()
+{
+  window.location.reload(1);
+},10000);
+
+setInterval(function(){
+  $.get("/cur_bid", function(data){
+    $('#cur_bid').html(data);
+    console.log(data);
+  }); 
+},1000);
+</script>
+</body>
+</html>

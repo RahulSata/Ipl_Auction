@@ -1,0 +1,15 @@
+python manage.py makemigrations test_app thi j karvu padse....
+
+supeuser: admin , mandips1234
+
+login : csk, mandips1234
+	rcb, mandips1234
+
+
+Admin side thi team add karti vakhte tema sathe "Default User" table ma firstname, lastname, email aa 3 vastu add karvi
+									firstname for csk = csk
+									firstname for rcb = rcb
+									
+Player add karti vakhte soldprice and baseprice bey same rakhvani.....
+
+For control whole system please enter url : /backend 

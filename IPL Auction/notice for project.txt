@@ -1,0 +1,2 @@
+defaults:
+	player_soldprice : --

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<body>
+{% load static %}
+    {{p1.player_name}}
+    <br>
+    <input type="hidden" name="hidden" value={{p1.player_soldprice}}>
+    <input type="hidden" name="playername" value="{{p1.player_name}}">
+    <form action="/add/" method="post">{% csrf_token %}
+    {{player.player_name}}
+    	<input type="hidden" name="hidden" value={{p1.player_soldprice}}>
+    	<input type="hidden" name="playername" value="{{p1.player_name}}">
+    	<button>+</button>
+    </form>
+    <input type="text" name="player_price" value={{p1.player_soldprice}}>
+    <form action="/change_db/" method ="post">{% csrf_token %}
+     	<input type="hidden" name="playerprice" value={{p1.player_soldprice}}>
+    	<input type="hidden" name="player_price" value={{p1.player_soldprice}}>
+    	<input type="hidden" name="playername" value="{{p1.player_name}}">
+    	<input type="text" name="teamname" value="{{p1.player_tea}}">
+    	<button>Add To Team</button>
+    </form>
+  </body>
+</html>
